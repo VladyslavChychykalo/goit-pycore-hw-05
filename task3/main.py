@@ -1,5 +1,6 @@
 import sys
 
+
 def parse_log_line(line: str) -> dict:
     parts = line.split()
     return {
@@ -9,10 +10,11 @@ def parse_log_line(line: str) -> dict:
         'text': ' '.join(parts[3:]),
     }
 
+
 def load_logs(file_path: str) -> list:
     try:
         logs = []
-        with open(file_path, 'r') as file:
+        with open(file_path, 'r', encoding='utf-8') as file:
             for line in file:
                 logs.append(parse_log_line(line))
         return logs
@@ -20,8 +22,10 @@ def load_logs(file_path: str) -> list:
         print(f"File '{file_path}' not found.")
         sys.exit(1)
 
+
 def filter_logs_by_level(logs: list, level: str) -> list:
     return list(filter(lambda log: log['level'] == level, logs))
+
 
 def count_logs_by_level(logs: list) -> dict:
     levels = {}
@@ -32,11 +36,13 @@ def count_logs_by_level(logs: list) -> dict:
         levels[level] += 1
     return levels
 
+
 def display_log_counts(counts: dict):
     print('Рівень логування | Кількість')
     print('-----------------|---------')
     for level, count in counts.items():
         print(f'{level:<16} | {count}')
+
 
 def main(path: str):
     logs = load_logs(path)
@@ -50,10 +56,10 @@ def main(path: str):
         for log in filtered_logs:
             print(f"{log['date']} {log['time']} - {log['text']}")
 
+
 if __name__ == '__main__':
     try:
         main(sys.argv[1])
     except IndexError:
         print('Usage: python main.py <path_to_log_file> [log_level]')
         sys.exit(1)
- 
