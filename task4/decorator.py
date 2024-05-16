@@ -8,6 +8,5 @@ def input_error(func):
             return "Give me name and phone please."
         except KeyError:
             return "No such contact found."
-       
 
     return inner
